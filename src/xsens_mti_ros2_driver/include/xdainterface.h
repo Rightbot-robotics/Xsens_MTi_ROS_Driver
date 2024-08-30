@@ -39,6 +39,8 @@
 #include <xstypes/xsportinfo.h>
 #include <xstypes/xsstring.h>
 
+#include "std_srvs/srv/empty.hpp"
+
 #include <chrono>
 
 struct XsControl;
@@ -70,6 +72,8 @@ private:
 	void declareCommonParameters();
 	bool configureSensorSettings();
 	bool manualGyroBiasEstimation(uint16_t duration);
+	
+	void bias_estimation_service_cb(const std::shared_ptr<std_srvs::srv::Empty::Request> request);
 
 	XsControl *m_control;
 	XsDevice *m_device;
@@ -81,6 +85,7 @@ private:
 	// Timer for Manual Gyro Bias Estimation
 	rclcpp::TimerBase::SharedPtr m_manualGyroBiasTimer;
 	rclcpp::Subscription<mavros_msgs::msg::RTCM>::SharedPtr m_rtcmSubscription;
+	rclcpp::Service<std_srvs::srv::Empty>::SharedPtr gyro_bias_service_;
 };
 
 #endif

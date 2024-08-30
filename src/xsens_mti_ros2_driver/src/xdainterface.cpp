@@ -212,6 +212,10 @@ void XdaInterface::registerPublishers()
 		}
 	}
 
+	gyro_bias_service_ = m_node->create_service<std_srvs::srv::Empty>(
+      "estimate_gyro_bias",
+      std::bind(&XdaInterface::bias_estimation_service_cb, this, std::placeholders::_1));
+
 	//For RTK GNSS/INS MTi-8, MTi-680(G), we need to subscribe to a rostopic /rtcm.
 	if(isDeviceGnssRtk)
 	{
@@ -557,7 +561,12 @@ bool XdaInterface::handleError(std::string error)
 }
 
 
+void XdaInterface::bias_estimation_service_cb(const std::shared_ptr<std_srvs::srv::Empty::Request> request){
 
+	int gyro_bias_estimation_duration = 0;
+	m_node->get_parameter("gyro_bias_estimation_duration", gyro_bias_estimation_duration); //set gyro_bias_estimation_duration
+	manualGyroBiasEstimation(gyro_bias_estimation_duration);
+}
 
 /**
  * \brief Configures the sensor settings based on ROS parameters.
@@ -1351,5 +1360,6 @@ void XdaInterface::declareCommonParameters()
 	m_node->declare_parameter("pub_nmea", should_publish);
 	m_node->declare_parameter("pub_gnsspose", should_publish);
 
+	m_node->declare_parameter("gyro_bias_estimation_duration", 6);
 
 }
