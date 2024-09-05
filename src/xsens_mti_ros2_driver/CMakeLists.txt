@@ -10,6 +10,9 @@ endif()
 
 # Find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(Python REQUIRED COMPONENTS Interpreter Development)
+find_package(Python3)
 find_package(rclcpp REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
@@ -108,6 +111,13 @@ target_link_libraries(
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
 ## Mark executables and/or libraries for installation
+ament_python_install_package(${PROJECT_NAME}_py)
+
+install(PROGRAMS
+  scripts/imu_msg_publisher.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 install(TARGETS xsens_mti_node
   EXPORT export_${PROJECT_NAME}
   DESTINATION lib/${PROJECT_NAME}

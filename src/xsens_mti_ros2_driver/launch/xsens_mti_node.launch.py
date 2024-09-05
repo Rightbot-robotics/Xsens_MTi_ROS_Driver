@@ -21,6 +21,15 @@ def generate_launch_description():
             parameters=[parameters_file_path],
             arguments=[]
             )
+
+    imu_msg_publisher = Node(
+            package='xsens_mti_ros2_driver',
+            executable= 'imu_msg_publisher.py',
+            name='imu_msg_publisher',
+            output='screen',
+           )
+
     ld.add_action(xsens_mti_node)
+    ld.add_action(imu_msg_publisher)
 
     return ld

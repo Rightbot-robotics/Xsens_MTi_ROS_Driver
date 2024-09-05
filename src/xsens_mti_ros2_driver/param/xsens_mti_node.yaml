@@ -143,7 +143,7 @@
         pub_temperature: true
         pub_pressure: true
         pub_accelerationhr: false #High Rate Data Acceleration, when this is true, set enable_high_rate to true as well
-        pub_angular_velocity_hr: false #High Rate Data Angular Velocity,  when this is true, set enable_high_rate to true as well
+        pub_angular_velocity_hr: true #High Rate Data Angular Velocity,  when this is true, set enable_high_rate to true as well
         pub_transform: false
         pub_status: true
         pub_twist: true         # For GNSS/INS Version of MTI only
@@ -200,7 +200,7 @@
         # Set baudrate
         # ---------------
         #This is necessary if you have hig output rate, and if you see error message of 'data overflow' 
-        enable_setting_baudrate: false
+        enable_setting_baudrate: true
         #options: 115200, 230400, 460800, 921600, 2000000
         set_baudrate_value: 921600
 
